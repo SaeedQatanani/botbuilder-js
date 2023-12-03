@@ -20,7 +20,7 @@ import {
     ConversationState,
     createBotFrameworkAuthenticationFromConfiguration,
     MemoryStorage,
-    UserState
+    UserState,
 } from 'botbuilder';
 import { LuisApplication } from 'botbuilder-ai';
 
@@ -39,7 +39,7 @@ const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
     MicrosoftAppId: process.env.MicrosoftAppId,
     MicrosoftAppPassword: process.env.MicrosoftAppPassword,
     MicrosoftAppType: process.env.MicrosoftAppType,
-    MicrosoftAppTenantId: process.env.MicrosoftAppTenantId
+    MicrosoftAppTenantId: process.env.MicrosoftAppTenantId,
 });
 
 const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
@@ -53,12 +53,12 @@ const onTurnErrorHandler = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
     // NOTE: In production environment, you should consider logging this to Azure
     //       application insights.
-    console.error(`\n [onTurnError] unhandled error: ${ error }`);
+    console.error(`\n [onTurnError] unhandled error: ${error}`);
 
     // Send a trace activity, which will be displayed in Bot Framework Emulator
     await context.sendTraceActivity(
         'OnTurnError Trace',
-        `${ error }`,
+        `${error}`,
         'https://www.botframework.com/schemas/error',
         'TurnError'
     );
@@ -88,7 +88,11 @@ userState = new UserState(memoryStorage);
 // If configured, pass in the FlightBookingRecognizer. (Defining it externally allows it to be mocked for tests)
 let luisRecognizer;
 const { LuisAppId, LuisAPIKey, LuisAPIHostName } = process.env;
-const luisConfig: LuisApplication = { applicationId: LuisAppId, endpointKey: LuisAPIKey, endpoint: `https://${ LuisAPIHostName }` };
+const luisConfig: LuisApplication = {
+    applicationId: LuisAppId,
+    endpointKey: LuisAPIKey,
+    endpoint: `https://${LuisAPIHostName}`,
+};
 
 luisRecognizer = new FlightBookingRecognizer(luisConfig);
 
@@ -102,7 +106,7 @@ const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
-    console.log(`\n${ server.name } listening to ${ server.url }`);
+    console.log(`\n${server.name} listening to ${server.url}`);
     console.log('\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator');
     console.log('\nTo talk to your bot, open the emulator select "Open Bot"');
 });
@@ -121,5 +125,5 @@ server.on('upgrade', async (req, socket, head) => {
     // Set onTurnError for the CloudAdapter created for each connection.
     streamingAdapter.onTurnError = onTurnErrorHandler;
 
-    await streamingAdapter.process(req, socket as unknown as INodeSocket, head, (context) => bot.run(context));
+    await streamingAdapter.process(req, (socket as unknown) as INodeSocket, head, (context) => bot.run(context));
 });

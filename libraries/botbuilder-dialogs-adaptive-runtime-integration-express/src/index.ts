@@ -1,3 +1,4 @@
+// Edited
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -71,11 +72,12 @@ export async function start(
     listen();
 }
 
+// Commented for Ejada Requirements
 // Content type overrides for specific file extensions
-const extensionContentTypes: Record<string, string> = {
-    '.lu': 'vnd.application/lu',
-    '.qna': 'vnd.application/qna',
-};
+// const extensionContentTypes: Record<string, string> = {
+//     '.lu': 'vnd.application/lu',
+//     '.qna': 'vnd.application/qna',
+// };
 
 /**
  * Create an Express App using the runtime Express integration.
@@ -130,11 +132,14 @@ export async function makeApp(
 
     app.use(
         express.static(path.join(applicationRoot, resolvedOptions.staticDirectory), {
-            setHeaders: (res, filePath) => {
-                const contentType = extensionContentTypes[path.extname(filePath)];
-                if (contentType) {
-                    res.setHeader('Content-Type', contentType);
-                }
+            // setHeaders: (res, filePath) => {
+            //     const contentType = extensionContentTypes[path.extname(filePath)];
+            //     if (contentType) {
+            //         res.setHeader('Content-Type', contentType);
+            //     }
+            // },
+            setHeaders: (res) => {
+                res.setHeader('Content-Type', '');
             },
         })
     );

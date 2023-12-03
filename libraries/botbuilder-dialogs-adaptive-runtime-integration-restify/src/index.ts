@@ -1,3 +1,4 @@
+// Edited
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -84,10 +85,10 @@ export async function start(
 }
 
 // Content type overrides for specific file extensions
-const extensionContentTypes: Record<string, string> = {
-    '.lu': 'vnd.application/lu',
-    '.qna': 'vnd.application/qna',
-};
+// const extensionContentTypes: Record<string, string> = {
+//     '.lu': 'vnd.application/lu',
+//     '.qna': 'vnd.application/qna',
+// };
 
 /**
  * Create a server using the runtime restify integration.
@@ -181,11 +182,14 @@ export async function makeServer(
     server.get(
         '*',
         restify.plugins.serveStaticFiles(path.join(applicationRoot, resolvedOptions.staticDirectory), {
-            setHeaders: (res, filePath) => {
-                const contentType = extensionContentTypes[path.extname(filePath)];
-                if (contentType) {
-                    res.setHeader('Content-Type', contentType);
-                }
+            // setHeaders: (res, filePath) => {
+            //     const contentType = extensionContentTypes[path.extname(filePath)];
+            //     if (contentType) {
+            //         res.setHeader('Content-Type', contentType);
+            //     }
+            // },
+            setHeaders: (res) => {
+                res.setHeader('Content-Type', '');
             },
         })
     );

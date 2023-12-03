@@ -27,7 +27,7 @@ require('dotenv').config({ path: ENV_FILE });
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword
+    appPassword: process.env.MicrosoftAppPassword,
 });
 
 // Catch-all for errors.
@@ -35,7 +35,7 @@ adapter.onTurnError = async (context, error) => {
     // This check writes out errors to console log
     // NOTE: In production environment, you should consider logging this to Azure
     //       application insights.
-    console.error(`\n [onTurnError]: ${ error }`);
+    console.error(`\n [onTurnError]: ${error}`);
     // Send a message to the user
     const onTurnErrorMessage = `Sorry, it looks like something went wrong!`;
     await context.sendActivity(onTurnErrorMessage, onTurnErrorMessage, InputHints.ExpectingInput);
@@ -59,7 +59,9 @@ const logger = console;
 
 // If configured, pass in the FlightBookingRecognizer.  (Defining it externally allows it to be mocked for tests)
 let luisRecognizer;
-const luisConfig = (({ LuisAppId, LuisAPIKey, LuisAPIHostName }) => ({ LuisAppId, LuisAPIKey, LuisAPIHostName }))(process.env);
+const luisConfig = (({ LuisAppId, LuisAPIKey, LuisAPIHostName }) => ({ LuisAppId, LuisAPIKey, LuisAPIHostName }))(
+    process.env
+);
 luisRecognizer = new FlightBookingRecognizer(luisConfig);
 
 // Create the main dialog.
@@ -69,8 +71,8 @@ const bot = new DialogAndWelcomeBot(conversationState, userState, dialog, logger
 
 // Create HTTP server
 const server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function() {
-    console.log(`\n${ server.name } listening to ${ server.url }`);
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+    console.log(`\n${server.name} listening to ${server.url}`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
 });
 

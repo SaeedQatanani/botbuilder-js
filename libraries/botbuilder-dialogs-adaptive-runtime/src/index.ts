@@ -1,3 +1,4 @@
+// Edited
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -6,16 +7,16 @@ import fs from 'fs';
 import path from 'path';
 import { Configuration } from './configuration';
 
-import LuisBotComponent from 'botbuilder-ai-luis';
-import QnAMakerBotComponent from 'botbuilder-ai-qna';
+// import LuisBotComponent from 'botbuilder-ai-luis';
+// import QnAMakerBotComponent from 'botbuilder-ai-qna';
 import { AdaptiveBotComponent, LanguageGenerationBotComponent } from 'botbuilder-dialogs-adaptive';
-import { ApplicationInsightsTelemetryClient, TelemetryInitializerMiddleware } from 'botbuilder-applicationinsights';
-import { BlobsStorage, BlobsTranscriptStore } from 'botbuilder-azure-blobs';
+// import { ApplicationInsightsTelemetryClient, TelemetryInitializerMiddleware } from 'botbuilder-applicationinsights';
+// import { BlobsStorage, BlobsTranscriptStore } from 'botbuilder-azure-blobs';
 import { ComponentDeclarativeTypes, ResourceExplorer } from 'botbuilder-dialogs-declarative';
 import { ConfigurationResourceExporer } from './configurationResourceExplorer';
 import { CoreBot } from './coreBot';
 import { CoreBotAdapter } from './coreBotAdapter';
-import { CosmosDbPartitionedStorage } from 'botbuilder-azure';
+// import { CosmosDbPartitionedStorage } from 'botbuilder-azure';
 import { DialogsBotComponent, MemoryScope, PathResolver } from 'botbuilder-dialogs';
 import { ServiceCollection } from 'botbuilder-dialogs-adaptive-runtime-core';
 
@@ -28,6 +29,34 @@ import {
     ConnectorClientOptions,
 } from 'botframework-connector';
 
+// import {
+//     ActivityHandlerBase,
+//     BotAdapter,
+//     BotComponent,
+//     BotFrameworkHttpAdapter,
+//     BotTelemetryClient,
+//     ChannelServiceHandler,
+//     ChannelServiceHandlerBase,
+//     ChannelServiceRoutes,
+//     CloudSkillHandler,
+//     ConsoleTranscriptLogger,
+//     ConversationState,
+//     InspectionMiddleware,
+//     InspectionState,
+//     MemoryStorage,
+//     Middleware,
+//     MiddlewareSet,
+//     NullTelemetryClient,
+//     SetSpeakMiddleware,
+//     ShowTypingMiddleware,
+//     SkillConversationIdFactory,
+//     SkillConversationIdFactoryBase,
+//     Storage,
+//     TelemetryLoggerMiddleware,
+//     TranscriptLoggerMiddleware,
+//     UserState,
+//     createBotFrameworkAuthenticationFromConfiguration,
+// } from 'botbuilder';
 import {
     ActivityHandlerBase,
     BotAdapter,
@@ -38,7 +67,6 @@ import {
     ChannelServiceHandlerBase,
     ChannelServiceRoutes,
     CloudSkillHandler,
-    ConsoleTranscriptLogger,
     ConversationState,
     InspectionMiddleware,
     InspectionState,
@@ -51,8 +79,6 @@ import {
     SkillConversationIdFactory,
     SkillConversationIdFactoryBase,
     Storage,
-    TelemetryLoggerMiddleware,
-    TranscriptLoggerMiddleware,
     UserState,
     createBotFrameworkAuthenticationFromConfiguration,
 } from 'botbuilder';
@@ -89,26 +115,26 @@ function addFeatures(services: ServiceCollection, configuration: Configuration):
                 );
             }
 
-            if (configuration.bool(['traceTranscript'])) {
-                const blobsTranscript = configuration.type(
-                    ['blobTranscript'],
-                    z
-                        .object({
-                            connectionString: z.string(),
-                            containerName: z.string(),
-                            decodeTranscriptKey: z.boolean().optional(),
-                        })
-                        .nonstrict()
-                );
+            // if (configuration.bool(['traceTranscript'])) {
+            //     const blobsTranscript = configuration.type(
+            //         ['blobTranscript'],
+            //         z
+            //             .object({
+            //                 connectionString: z.string(),
+            //                 containerName: z.string(),
+            //                 decodeTranscriptKey: z.boolean().optional(),
+            //             })
+            //             .nonstrict()
+            //     );
 
-                middlewareSet.use(
-                    new TranscriptLoggerMiddleware(
-                        blobsTranscript
-                            ? new BlobsTranscriptStore(blobsTranscript.connectionString, blobsTranscript.containerName)
-                            : new ConsoleTranscriptLogger()
-                    )
-                );
-            }
+            //     middlewareSet.use(
+            //         new TranscriptLoggerMiddleware(
+            //             blobsTranscript
+            //                 ? new BlobsTranscriptStore(blobsTranscript.connectionString, blobsTranscript.containerName)
+            //                 : new ConsoleTranscriptLogger()
+            //         )
+            //     );
+            // }
 
             if (configuration.bool(['useInspection'])) {
                 const inspectionState = new InspectionState(storage);
@@ -121,36 +147,38 @@ function addFeatures(services: ServiceCollection, configuration: Configuration):
 }
 
 function addTelemetry(services: ServiceCollection, configuration: Configuration): void {
+    console.log('Commented Application Insights Telemetry code. Config. passed: ', configuration);
     services.addFactory<BotTelemetryClient>('botTelemetryClient', () => {
-        const telemetryOptions = configuration.type(
-            ['options'],
-            z
-                .object({
-                    connectionString: z.string(),
-                    instrumentationKey: z.string(),
-                })
-                .partial()
-                .nonstrict()
-        );
+        // const telemetryOptions = configuration.type(
+        //     ['options'],
+        //     z
+        //         .object({
+        //             connectionString: z.string(),
+        //             instrumentationKey: z.string(),
+        //         })
+        //         .partial()
+        //         .nonstrict()
+        // );
 
-        const setupString = telemetryOptions?.connectionString ?? telemetryOptions?.instrumentationKey;
-        return setupString ? new ApplicationInsightsTelemetryClient(setupString) : new NullTelemetryClient();
+        // const setupString = telemetryOptions?.connectionString ?? telemetryOptions?.instrumentationKey;
+        // return setupString ? new ApplicationInsightsTelemetryClient(setupString) : new NullTelemetryClient();
+        return new NullTelemetryClient();
     });
 
-    services.addFactory<
-        Middleware,
-        {
-            botTelemetryClient: BotTelemetryClient;
-        }
-    >(
-        'telemetryMiddleware',
-        ['botTelemetryClient'],
-        ({ botTelemetryClient }) =>
-            new TelemetryInitializerMiddleware(
-                new TelemetryLoggerMiddleware(botTelemetryClient, configuration.bool(['logPersonalInformation'])),
-                configuration.bool(['logActivities'])
-            )
-    );
+    // services.addFactory<
+    //     Middleware,
+    //     {
+    //         botTelemetryClient: BotTelemetryClient;
+    //     }
+    // >(
+    //     'telemetryMiddleware',
+    //     ['botTelemetryClient'],
+    //     ({ botTelemetryClient }) =>
+    //         new TelemetryInitializerMiddleware(
+    //             new TelemetryLoggerMiddleware(botTelemetryClient, configuration.bool(['logPersonalInformation'])),
+    //             configuration.bool(['logActivities'])
+    //         )
+    // );
 }
 
 function addStorage(services: ServiceCollection, configuration: Configuration): void {
@@ -170,64 +198,66 @@ function addStorage(services: ServiceCollection, configuration: Configuration): 
         const storage = configuration.string(['runtimeSettings', 'storage']);
 
         switch (storage) {
-            case 'BlobsStorage': {
-                const blobsStorage = configuration.type(
-                    ['BlobsStorage'],
-                    z
-                        .object({
-                            connectionString: z.string(),
-                            containerName: z.string(),
-                        })
-                        .nonstrict()
-                );
+            // case 'BlobsStorage': {
+            //     const blobsStorage = configuration.type(
+            //         ['BlobsStorage'],
+            //         z
+            //             .object({
+            //                 connectionString: z.string(),
+            //                 containerName: z.string(),
+            //             })
+            //             .nonstrict()
+            //     );
 
-                if (!blobsStorage) {
-                    throw new TypeError('`BlobsStorage` missing in configuration');
-                }
+            //     if (!blobsStorage) {
+            //         throw new TypeError('`BlobsStorage` missing in configuration');
+            //     }
 
-                return new BlobsStorage(blobsStorage.connectionString, blobsStorage.containerName);
-            }
+            //     return new BlobsStorage(blobsStorage.connectionString, blobsStorage.containerName);
+            // }
 
-            case 'CosmosDbPartitionedStorage': {
-                const cosmosOptions = configuration.type(
-                    ['CosmosDbPartitionedStorage'],
-                    z
-                        .object({
-                            authKey: z.string().optional(),
-                            compatibilityMode: z.boolean().optional(),
-                            containerId: z.string(),
-                            containerThroughput: z.number().optional(),
-                            cosmosDBEndpoint: z.string().optional(),
-                            databaseId: z.string(),
-                            keySuffix: z.string().optional(),
-                        })
-                        .nonstrict()
-                );
+            // case 'CosmosDbPartitionedStorage': {
+            //     const cosmosOptions = configuration.type(
+            //         ['CosmosDbPartitionedStorage'],
+            //         z
+            //             .object({
+            //                 authKey: z.string().optional(),
+            //                 compatibilityMode: z.boolean().optional(),
+            //                 containerId: z.string(),
+            //                 containerThroughput: z.number().optional(),
+            //                 cosmosDBEndpoint: z.string().optional(),
+            //                 databaseId: z.string(),
+            //                 keySuffix: z.string().optional(),
+            //             })
+            //             .nonstrict()
+            //     );
 
-                if (!cosmosOptions) {
-                    throw new TypeError('`CosmosDbPartitionedStorage` missing in configuration');
-                }
+            //     if (!cosmosOptions) {
+            //         throw new TypeError('`CosmosDbPartitionedStorage` missing in configuration');
+            //     }
 
-                const { cosmosDBEndpoint, ...rest } = cosmosOptions;
-                return new CosmosDbPartitionedStorage({
-                    ...rest,
-                    cosmosDbEndpoint: cosmosDBEndpoint,
-                });
-            }
+            //     const { cosmosDBEndpoint, ...rest } = cosmosOptions;
+            //     return new CosmosDbPartitionedStorage({
+            //         ...rest,
+            //         cosmosDbEndpoint: cosmosDBEndpoint,
+            //     });
+            // }
 
-            case 'Memory': {
-                return new MemoryStorage();
-            }
+            // case 'Memory': {
+            //     return new MemoryStorage();
+            // }
 
             default:
-                if (storage) {
-                    throw new TypeError('Invalid runtime.storage value');
-                }
+                // TODO: Check this condition
+                // if (storage) {
+                //     throw new TypeError('Invalid runtime.storage value');
+                // }
                 return new MemoryStorage();
         }
     });
 }
 
+// TODO: Look for tenantId
 function addSkills(services: ServiceCollection, configuration: Configuration): void {
     services.addFactory<SkillConversationIdFactoryBase, { storage: Storage }>(
         'skillConversationIdFactory',
@@ -464,27 +494,27 @@ function addComposerConfiguration(configuration: Configuration): void {
     const botRoot = configuration.string(['bot']) || '.';
     configuration.set(['BotRoot'], botRoot);
 
-    const luisRegion =
-        configuration.string(['LUIS_AUTHORING_REGION']) ||
-        configuration.string(['luis', 'authoringRegion']) ||
-        configuration.string(['luis', 'region']) ||
-        'westus';
+    // const luisRegion =
+    //     configuration.string(['LUIS_AUTHORING_REGION']) ||
+    //     configuration.string(['luis', 'authoringRegion']) ||
+    //     configuration.string(['luis', 'region']) ||
+    //     'westus';
 
-    const luisEndpoint =
-        configuration.string(['luis', 'endpoint']) || `https://${luisRegion}.api.cognitive.microsoft.com`;
-    configuration.set(['luis', 'endpoint'], luisEndpoint);
+    // const luisEndpoint =
+    //     configuration.string(['luis', 'endpoint']) || `https://${luisRegion}.api.cognitive.microsoft.com`;
+    // configuration.set(['luis', 'endpoint'], luisEndpoint);
 
-    const userName = process.env.USERNAME || process.env.USER;
+    // const userName = process.env.USERNAME || process.env.USER;
 
-    let environment = configuration.string(['luis', 'environment']) || userName;
-    if (environment === 'Development') {
-        environment = userName;
-    }
+    // let environment = configuration.string(['luis', 'environment']) || userName;
+    // if (environment === 'Development') {
+    //     environment = userName;
+    // }
 
-    configuration.file(path.join(botRoot, 'generated', `luis.settings.${environment}.${luisRegion}.json`), true);
+    // configuration.file(path.join(botRoot, 'generated', `luis.settings.${environment}.${luisRegion}.json`), true);
 
-    const qnaRegion = configuration.string(['qna', 'qnaRegion']) || 'westus';
-    configuration.file(path.join(botRoot, 'generated', `qnamaker.settings.${environment}.${qnaRegion}.json`), true);
+    // const qnaRegion = configuration.string(['qna', 'qnaRegion']) || 'westus';
+    // configuration.file(path.join(botRoot, 'generated', `qnamaker.settings.${environment}.${qnaRegion}.json`), true);
 
     configuration.file(path.join(botRoot, 'generated', 'orchestrator.settings.json'), true);
 }
@@ -516,13 +546,13 @@ function registerDialogsComponents(services: ServiceCollection, configuration: C
     new DialogsBotComponent().configureServices(services, configuration);
 }
 
-function registerLuisComponents(services: ServiceCollection, configuration: Configuration): void {
-    new LuisBotComponent().configureServices(services, configuration);
-}
+// function registerLuisComponents(services: ServiceCollection, configuration: Configuration): void {
+//     new LuisBotComponent().configureServices(services, configuration);
+// }
 
-function registerQnAComponents(services: ServiceCollection, configuration: Configuration): void {
-    new QnAMakerBotComponent().configureServices(services, configuration);
-}
+// function registerQnAComponents(services: ServiceCollection, configuration: Configuration): void {
+//     new QnAMakerBotComponent().configureServices(services, configuration);
+// }
 
 /**
  * Construct all runtime services.
@@ -629,8 +659,8 @@ export async function getRuntimeServices(
 
     registerAdaptiveComponents(services, configuration);
     registerDialogsComponents(services, configuration);
-    registerLuisComponents(services, configuration);
-    registerQnAComponents(services, configuration);
+    // registerLuisComponents(services, configuration);
+    // registerQnAComponents(services, configuration);
 
     const runtimeSettings = configuration.bind(['runtimeSettings']);
 

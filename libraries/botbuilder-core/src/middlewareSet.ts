@@ -1,3 +1,4 @@
+// Edited
 /**
  * @module botbuilder
  */
@@ -105,6 +106,9 @@ export class MiddlewareSet implements Middleware {
      */
     use(...middlewares: (MiddlewareHandler | Middleware)[]): this {
         middlewares.forEach((plugin) => {
+            if (plugin === null) {
+                console.log('A null plugin -- Caused by removing service');
+            }
             if (typeof plugin === 'function') {
                 this.middleware.push(plugin);
             } else if (typeof plugin === 'object' && plugin.onTurn) {
