@@ -14,10 +14,6 @@
   "bugs": {
     "url": "https://github.com/Microsoft/botbuilder-js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botbuilder-js.git"
-  },
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "typesVersions": {
@@ -28,15 +24,15 @@
     }
   },
   "dependencies": {
-    "botbuilder-dialogs": "4.1.6",
-    "botbuilder-stdlib": "4.1.6",
+    "botbuilder-dialogs": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botbuilder-dialogs",
+    "botbuilder-stdlib": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botbuilder-stdlib",
     "chokidar": "^3.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "adaptive-expressions": "4.1.6",
-    "botbuilder-core": "4.1.6",
-    "botbuilder-dialogs-adaptive-runtime-core": "4.1.6",
+    "adaptive-expressions": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/adaptive-expressions",
+    "botbuilder-core": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botbuilder-core",
+    "botbuilder-dialogs-adaptive-runtime-core": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botbuilder-dialogs-adaptive-runtime-core",
     "jsonschema": "^1.4.0"
   },
   "scripts": {

@@ -12,10 +12,6 @@
   "bugs": {
     "url": "https://github.com/Microsoft/botbuilder-js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botbuilder-js.git"
-  },
   "main": "lib/index.js",
   "browser": "lib/browser.js",
   "types": "lib/index.d.ts",
@@ -32,8 +28,8 @@
     "@azure/msal-node": "^1.2.0",
     "axios": "^0.25.0",
     "base64url": "^3.0.0",
-    "botbuilder-stdlib": "4.1.6",
-    "botframework-schema": "4.1.6",
+    "botbuilder-stdlib": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botbuilder-stdlib",
+    "botframework-schema": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/botframework-schema",
     "cross-fetch": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "rsa-pem-from-mod-exp": "^0.8.4",

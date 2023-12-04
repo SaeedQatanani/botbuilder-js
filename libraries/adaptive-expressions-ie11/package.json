@@ -12,14 +12,10 @@
   "bugs": {
     "url": "https://github.com/Microsoft/botbuilder-js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botbuilder-js.git"
-  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "adaptive-expressions": "4.1.6",
+    "adaptive-expressions": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/adaptive-expressions",
     "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.3.2",
     "terser-webpack-plugin": "^4.2.3"

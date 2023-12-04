@@ -12,14 +12,10 @@
   "bugs": {
     "url": "https://github.com/Microsoft/botbuilder-js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botbuilder-js.git"
-  },
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "dependencies": {
-    "adaptive-expressions": "4.1.6",
+    "adaptive-expressions": "C:/Users/Lenovo/Desktop/botbuilder/botbuilder-js/libraries/adaptive-expressions",
     "antlr4ts": "0.5.0-alpha.3",
     "lodash": "^4.17.19",
     "uuid": "^8.3.2"

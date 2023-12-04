@@ -14,10 +14,6 @@
   "bugs": {
     "url": "https://github.com/Microsoft/botbuilder-js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/botbuilder-js.git"
-  },
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "typesVersions": {
