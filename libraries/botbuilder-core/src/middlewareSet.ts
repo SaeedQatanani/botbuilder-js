@@ -106,10 +106,9 @@ export class MiddlewareSet implements Middleware {
      */
     use(...middlewares: (MiddlewareHandler | Middleware)[]): this {
         middlewares.forEach((plugin) => {
-            if (plugin === null) {
+            if (plugin === null || plugin === undefined) {
                 console.log('A null plugin -- Caused by removing service');
-            }
-            if (typeof plugin === 'function') {
+            } else if (typeof plugin === 'function') {
                 this.middleware.push(plugin);
             } else if (typeof plugin === 'object' && plugin.onTurn) {
                 this.middleware.push((context, next) => plugin.onTurn(context, next));

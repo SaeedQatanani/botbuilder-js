@@ -73,7 +73,6 @@ import {
     MemoryStorage,
     Middleware,
     MiddlewareSet,
-    NullTelemetryClient,
     SetSpeakMiddleware,
     ShowTypingMiddleware,
     SkillConversationIdFactory,
@@ -147,23 +146,24 @@ function addFeatures(services: ServiceCollection, configuration: Configuration):
 }
 
 function addTelemetry(services: ServiceCollection, configuration: Configuration): void {
-    console.log('Commented Application Insights Telemetry code. Config. passed: ', configuration);
-    services.addFactory<BotTelemetryClient>('botTelemetryClient', () => {
-        // const telemetryOptions = configuration.type(
-        //     ['options'],
-        //     z
-        //         .object({
-        //             connectionString: z.string(),
-        //             instrumentationKey: z.string(),
-        //         })
-        //         .partial()
-        //         .nonstrict()
-        // );
+    console.log('Commented Application Insights Telemetry code.|| Configuration passed: ', configuration);
+    console.log('Skip adding Telemetry');
+    // services.addFactory<BotTelemetryClient>('botTelemetryClient', () => {
+    //     const telemetryOptions = configuration.type(
+    //         ['options'],
+    //         z
+    //             .object({
+    //                 connectionString: z.string(),
+    //                 instrumentationKey: z.string(),
+    //             })
+    //             .partial()
+    //             .nonstrict()
+    //     );
 
-        // const setupString = telemetryOptions?.connectionString ?? telemetryOptions?.instrumentationKey;
-        // return setupString ? new ApplicationInsightsTelemetryClient(setupString) : new NullTelemetryClient();
-        return new NullTelemetryClient();
-    });
+    //     const setupString = telemetryOptions?.connectionString ?? telemetryOptions?.instrumentationKey;
+    //     return setupString ? new ApplicationInsightsTelemetryClient(setupString) : new NullTelemetryClient();
+    //     return new NullTelemetryClient();
+    // });
 
     // services.addFactory<
     //     Middleware,

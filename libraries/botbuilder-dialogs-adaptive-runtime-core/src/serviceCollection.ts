@@ -197,9 +197,16 @@ export class ServiceCollection {
     ): ReturnType {
         // Consume all dependencies and then reset so updating registrations without re-registering
         // dependencies works
-        this.dependencies.forEach((dependencies, node) =>
-            dependencies.forEach((dependency) => this.graph.addDependency(node, stringify(dependency)))
-        );
+        this.dependencies.forEach((dependencies, node) => {
+            console.log('In serviceCollection.ts file');
+            dependencies.forEach((dependency) => {
+                console.log('Dependency: ' + dependency);
+                console.log('Node: ' + node);
+                if (!dependency.includes('Telemetry') && !dependency.includes('telemetry')) {
+                    this.graph.addDependency(node, stringify(dependency));
+                }
+            });
+        });
 
         // Generate nodes after registering dependencies so ordering is correct
         const nodes = generateNodes();
